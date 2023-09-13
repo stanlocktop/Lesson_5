@@ -1,68 +1,49 @@
-﻿namespace Task1
+﻿
+//1) Потрібно додати до масиву елемент на початок. 
+
+//Масив заповнити рандомними числами. Той елемент, що потрібно додати, також взяти рандомно.  Зробити методи, які в якості параметру приймають масив (вивід на екран, заповнення масиву елементами, додавання елементу на початок).
+class Program
 {
-    //   1) Потрібно додати до масиву елемент на початок. 
-    //Масив заповнити рандомними числами.Той елемент, що потрібно додати, також взяти рандомно.Зробити методи, які в якості параметру приймають масив (вивід на екран, заповнення масиву елементами, додавання елементу на початок).
-    class Program
+    static void Main()
     {
-        static void Main(string[] args)
+        Console.OutputEncoding = System.Text.Encoding.Unicode;
+        int[] array = new int[5]; 
+        ArrayRandomNumbers(array); // Метод заповнення масиву випадковими числами
+        OutputArray(array); // Метод виведення масиву 
+        int numberToAdd = GenerateRandomNumber(); //Метод генерації випадкового числа, яке будемо додавати на початок масиву
+        AddNumberToStart(array, numberToAdd); // Метод додавання елементу на початок масиву
+        OutputArray(array); // Виведення фінального масиву
+    }
+    static void ArrayRandomNumbers(int[] array)
+    {
+        Random random = new Random();
+        for (int i = 0; i < array.Length; i++)
         {
-            Console.OutputEncoding = System.Text.Encoding.Unicode;
-            int[] array = new int[5]; 
-            RandomNumbersArray(array);
-
-            Console.Write("Начальный вид массива: ");
-            Console.Write(string.Join(",",  array) + "\n"); // Виводимо початковий масив
-
-            // Генеруємо випадкове число, яке будемо додавати на початок масиву
-            int numberToAdd = GenerateRandomNumber();
-
-            // Додаємо елемент на початок масиву
-            AddElementAtBeginning(array, numberToAdd);
-
-            // Виводимо оновлений масив на екран
-            PrintArray(array);
+            array[i] = random.Next(1, 11); 
         }
-
-        // Метод для заповнення масиву випадковими числами
-        static void RandomNumbersArray(int[] array)
+    }
+    static void OutputArray(int[] array)
+    {
+        Console.ForegroundColor = ConsoleColor.Blue; // устанавливаем цвет
+        Console.WriteLine("Масив: ");
+        Console.ResetColor(); // сбрасываем в стандартный
+        foreach (int number in array)
         {
-            Random random = new Random();
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = random.Next(1, 101); // Змініть діапазон чисел за потребою
-            }
+            Console.Write(number + " ");
         }
-
-        // Метод для виведення масиву на екран
-        static void PrintArray(int[] array)
-        {
-            Console.WriteLine("Масив:");
-            foreach (int number in array)
-            {
-                Console.Write(number + " ");
-            }
-            Console.WriteLine();
-        }
-
-        // Метод для генерації випадкового числа
-        static int GenerateRandomNumber()
-        {
-            Random random = new Random();
-            return random.Next(1, 101); // Змініть діапазон чисел за потребою
-        }
-
-        // Метод для додавання елементу на початок масиву
-        static void AddElementAtBeginning(int[] array, int element)
-        {
-            int[] newArray = new int[array.Length + 1];
-            newArray[0] = element;
-
-            // Копіюємо вміст початкового масиву в новий масив, зсуваючи його на один елемент праворуч
-            Array.Copy(array, 0, newArray, 1, array.Length);
-
-            // Копіюємо оновлений масив назад в початковий масив
-            Array.Copy(newArray, array, array.Length);
-            Console.ReadKey();
-        }
+        Console.WriteLine();
+    }
+    static int GenerateRandomNumber()
+    {
+        Random random = new Random();
+        return random.Next(1, 11); 
+    }
+    static void AddNumberToStart(int[] array, int element)
+    {
+        int[] newArray = new int[array.Length + 1];
+        newArray[0] = element;
+        Array.Copy(array, 0, newArray, 1, array.Length);
+        Array.Copy(newArray, array, array.Length);
+        Console.ReadKey();
     }
 }
